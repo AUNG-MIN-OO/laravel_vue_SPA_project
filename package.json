@@ -10,7 +10,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "axios": "^0.21",
+        "axios": "^0.21.2",
         "bootstrap": "^4.6.0",
         "jquery": "^3.6",
         "laravel-mix": "^6.0.6",
@@ -25,6 +25,8 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "laravel-vue-pagination": "^2.3.1"
+        "laravel-vue-pagination": "^2.3.1",
+        "sweetalert2": "^11.1.4",
+        "vform": "^2.1.1"
     }
 }
