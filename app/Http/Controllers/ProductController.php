@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -17,7 +15,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+
+        return Product::when(request('search'),function ($query){
+            $query->where('name','like','%'.request('search').'%')->orderBy('id','desc')->paginate(5);
+        })->orderBy('id','desc')->paginate(5);
+
     }
 
     /**
