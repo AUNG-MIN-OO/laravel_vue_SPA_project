@@ -11,6 +11,7 @@
 <body>
     <div id="app">
         <product-component></product-component>
+        <vue-progress-bar></vue-progress-bar>
     </div>
 
 <script src="{{asset('js/app.js')}}"></script>

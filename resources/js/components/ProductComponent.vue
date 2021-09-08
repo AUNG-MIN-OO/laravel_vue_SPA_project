@@ -74,15 +74,20 @@
                 </div>
             </div>
             <!--            edit or create form end-->
+
         </div>
     </div>
 </template>
 
 <script>
+
+
 export default {
     name:'ProductComponent',
     data(){
         return{
+            fullPage: false,
+            isLoading : false,
             isEditMode : false,
             search:"",
             products: {},
@@ -97,11 +102,25 @@ export default {
     },
     methods:{
         view(page=1){
+            this.$Progress.start();
+            let loader = this.$loading.show({
+                // Optional parameters
+                container: this.fullPage ? null : this.$refs.formContainer,
+                color: '#3490dc',
+                width: 45,
+                height: 45,
+            });
             axios.get(`/api/product?page=${page}&search=${this.search}`)
                 .then((response)=>{
                     this.products = response.data;
+                    this.$Progress.finish();
+                    loader.hide()
                 })
-                .catch(error => console.log(error))
+                .catch(error => {
+                    this.$Progress.fail();
+                    loader.hide()
+                    console.log(error)
+                })
         },
         create(){
             this.product.clear();
@@ -156,7 +175,11 @@ export default {
                     axios.delete(`/api/product/${product.id}`)
                         .then((response)=>{
                             this.view();
-                            Swal.fire({title:'Deleted!',icon:'success'});
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            );
                         })
                         .catch(error=>console.log(error))
                 }
